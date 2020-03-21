@@ -53,6 +53,8 @@ npm run build
 
 
 server 目录是php CodeIgniter 项目目录
+
+服务器暂未做权限验证
 ```
 
 前端的修改添加内容可参考 [vue-manage-system](https://github.com/lin-xin/vue-manage-system)
