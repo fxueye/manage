@@ -36,11 +36,7 @@ export default {
       type: Boolean,
       default: false
     },
-    disabled: {
-      // 按钮是否禁用
-      type: Boolean,
-      default: false
-    },
+
     perms: {
       // 按钮权限标识，外部使用者传入
       type: String,
@@ -48,14 +44,16 @@ export default {
     }
   },
   data() {
-    return {};
+    return {
+      disabled: true
+    };
   },
   computed: {
     ...mapGetters("auth", { permission: "permission" })
   },
   watch: {
     permission: function(val) {
-      this.disabled = this.hasPermission(this.perms);
+      this.disabled = !this.hasPermission(this.perms);
     }
   },
   methods: {
@@ -78,7 +76,7 @@ export default {
     }
   },
   mounted() {
-    this.disabled = this.hasPermission(this.perms);
+    this.disabled = !this.hasPermission(this.perms);
   }
 };
 </script>
