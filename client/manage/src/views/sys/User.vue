@@ -10,10 +10,15 @@
     <div class="container">
       <div class="handle-box">
         <el-button type="primary" icon="el-icon-delete" class="mr10" @click="handleBatchDel">批量删除</el-button>
-        <el-button type="primary" class="mr10" @click="handleAdd">添加用户</el-button>
+        <perms-button type="primary" perms="sys:user:add" class="mr10" @click="handleAdd">添加用户</perms-button>
 
         <el-input v-model="query.name" placeholder="用户名" class="handle-input mr10"></el-input>
-        <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
+        <perms-button
+          type="primary"
+          perms="sys:user:select"
+          icon="el-icon-search"
+          @click="handleSearch"
+        >搜索</perms-button>
       </div>
       <el-table :data="users" border @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" align="center"></el-table-column>
@@ -47,7 +52,6 @@
             <perms-button
               type="text"
               icon="el-icon-delete"
-              class="red"
               perms="sys:user:del"
               @click="handleDelete(scope.$index, scope.row)"
             >删除</perms-button>

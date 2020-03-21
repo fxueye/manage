@@ -8,6 +8,7 @@ class MY_Controller extends CI_Controller
 	protected $ip;
 	function __construct()
 	{
+		$this->interface_start_time = microtime(true);
 		parent::__construct();
 		$this->load->driver('cache', array(
 			"adapter" => 'memcached',
@@ -16,7 +17,7 @@ class MY_Controller extends CI_Controller
 		$this->ret['code'] = ErrorCode::ERR_OK;
 		$this->ret['message'] = '';
 		$this->ret['servertime'] = time();
-		$this->interface_start_time = microtime(TRUE);
+		$this->load->model("log_model");
 
 		//跨域设置
 		header("Access-Control-Allow-Origin:*");
@@ -51,7 +52,8 @@ class MY_Controller extends CI_Controller
 	}
 	function __destruct()
 	{
-		$exec_time = microtime(TRUE) - $this->interface_start_time;
+		$exec_time = microtime(true) - $this->interface_start_time;
+
 		if (isset($this->ret['code']) && $this->ret['code'] != ErrorCode::ERR_OK) {
 			$ret = array(
 				'code' => $this->ret['code'],
@@ -73,8 +75,23 @@ class MY_Controller extends CI_Controller
 		}
 
 		$output = $this->json_xencode($ret);
+
 		log_message("INFO", "output:" . $output);
 		print $output;
+
+		if (strtoupper($_SERVER['REQUEST_METHOD']) != 'OPTIONS') {
+			$controler = $this->router->fetch_class();
+			$method = $this->router->fetch_method();
+			$data = array(
+				'method' => sprintf("%s/%s", $controler, $method),
+				'params' => json_encode($this->params()),
+				'time' => $exec_time,
+				'ip' => $this->ip,
+				'create_by' => isset($this->payload->name) ? $this->payload->name : '',
+				'create_time' => time(),
+			);
+			$this->log_model->add($data);
+		}
 	}
 	public function get_param($index, $default = "")
 	{
@@ -149,103 +166,5 @@ class MY_Controller extends CI_Controller
 	function cache_clean()
 	{
 		return $this->cache->clean();
-	}
-}
-
-class Weixin_Controller extends CI_Controller
-{
-	protected $wechat;
-	protected $type = 1;
-	public function __construct()
-	{
-		parent::__construct();
-
-
-		$this->load->driver('cache', array(
-			"adapter" => 'memcached',
-			"backup" => 'file'
-		));
-
-		$this->load->library("CI_Wechat");
-		$this->wechat = new CI_Wechat();
-		$this->wechat->logcallback = 'Dlog';
-		$this->wechat->debug = true;
-		$options = $this->config->item('wechat');
-		$this->type = $options['type'];
-	}
-
-
-
-	function set_cache($key, $data, $expire)
-	{
-		return $this->cache->save($key, $data, $expire);
-	}
-
-	function get_cache($key)
-	{
-		return $this->cache->get($key);
-	}
-
-	function del_cache($key)
-	{
-		return $this->cache->delete($key);
-	}
-
-	function clean_cache()
-	{
-		return $this->cache->clean();
-	}
-
-	protected function redirect($uri, $method = 'auto', $code = NULL)
-	{
-		if (!preg_match('#^(\w+:)?//#i', $uri)) {
-			$uri = base_url() . $uri;
-		}
-		redirect($uri, $method, $code);
-	}
-}
-
-
-class Wxmp_Controller extends Weixin_Controller
-{
-	public function __construct()
-	{
-		parent::__construct();
-
-		if (!isset($_SESSION)) {
-			session_start();
-		}
-		if (!is_weixin()) {
-			log_message(D, "请用微信打开！");
-			// exit;
-		}
-
-		$user = $this->session->userdata('user');
-		if (!$user) {
-			$current_url = current_url();
-			log_message(D, "current_url:" . $current_url);
-			set_cookie("wx_source_url", $current_url, 7200);
-			$this->redirect('wxmp/oauth');
-		}
-	}
-	protected function error($msg, $url = "", $second = 3)
-	{
-		$data["title"] = $this->lang->line("error");
-		$data["header"]  = create_header($this->lang->line("error"));
-		$data["msg"] = $msg;
-		$data["url"] = $url;
-		$data["second"] = $second;
-		//TODO
-		$this->load->view("admin/error", $data);
-	}
-	protected function success($msg, $url = "", $second = 3)
-	{
-		$data["title"] = $this->lang->line("success");
-		$data["header"]  = create_header($this->lang->line("success"));
-		$data["msg"] = $msg;
-		$data["url"] = $url;
-		$data["second"] = $second;
-		//TODO
-		$this->load->view("admin/success", $data);
 	}
 }

@@ -2,7 +2,7 @@
 
 ## 前端
 
-基于 Vue + Element UI 的后台管理系统解决方案。[线上地址](http://home.zhaobaoge.com:8003/admin/#/)
+基于 Vue + Element UI 的后台管理系统解决方案。[线上地址](http://oss.zhaobaoge.com:8000/#/login)
 
 ## 后端
 
@@ -35,7 +35,7 @@
 - [x] 用户管理
 - [x] 角色管理
 - [x] 菜单管理
-- [ ] 系统日志
+- [x] 系统日志
 
 ## 安装步骤
 

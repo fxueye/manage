@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50724
 File Encoding         : 65001
 
-Date: 2020-03-21 11:51:14
+Date: 2020-03-13 16:30:10
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -56,20 +56,16 @@ CREATE TABLE `c_menu` (
   `update_by` varchar(50) DEFAULT '' COMMENT '更新人',
   `update_time` bigint(20) DEFAULT '0' COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='菜单管理';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='菜单管理';
 
 -- ----------------------------
 -- Records of c_menu
 -- ----------------------------
-INSERT INTO `c_menu` VALUES ('1', '系统管理', '0', '', '', '0', 'el-icon-lx-settings', '0', 'admin', '1584071757', 'admin', '1584071757');
-INSERT INTO `c_menu` VALUES ('2', '用户管理', '1', '/sys/user', '', '1', '', '0', 'admin', '1584071757', 'admin', '1584071757');
-INSERT INTO `c_menu` VALUES ('3', '角色管理', '1', '/sys/role', '', '1', '', '0', 'admin', '1584071757', 'admin', '1584071757');
-INSERT INTO `c_menu` VALUES ('4', '菜单管理', '1', '/sys/menu', '', '1', '', '0', 'admin', '1584071757', 'admin', '1584071757');
-INSERT INTO `c_menu` VALUES ('5', '系统日志', '1', '/sys/log', '', '1', '', '0', 'admin', '1584071757', 'admin', '1584071757');
-INSERT INTO `c_menu` VALUES ('6', '添加', '2', '', 'sys:user:add', '2', '', '0', 'admin', '1584703700', 'admin', '1584703700');
-INSERT INTO `c_menu` VALUES ('7', '删除', '2', '', 'sys:user:del', '2', '', '0', 'admin', '1584703736', 'admin', '1584703736');
-INSERT INTO `c_menu` VALUES ('8', '编辑', '2', '', 'sys:user:edit', '2', '', '0', 'admin', '1584703766', 'admin', '1584703766');
-INSERT INTO `c_menu` VALUES ('9', '查询', '2', '', 'sys:user:select', '2', '', '0', 'admin', '1584703794', 'admin', '1584703794');
+INSERT INTO `c_menu` VALUES ('1', '系统管理', '1', '', '', '0', 'el-icon-lx-settings', '0', 'admin', '1584071757', 'admin', '1584071757');
+INSERT INTO `c_menu` VALUES ('2', '用户管理', '0', '/sys/user', '', '0', '', '0', 'admin', '1584071757', 'admin', '1584071757');
+INSERT INTO `c_menu` VALUES ('3', '系统首页', '0', '/dashboard', '', '0', 'el-icon-lx-home', '0', 'admin', '1584071757', 'admin', '1584071757');
+INSERT INTO `c_menu` VALUES ('4', '菜单管理', '1', '/sys/menu', '', '0', '', '0', 'admin', '1584071757', 'admin', '1584071757');
+INSERT INTO `c_menu` VALUES ('5', '角色管理', '1', '/sys/role', '', '0', '', '0', 'admin', '1584071757', 'admin', '1584071757');
 
 -- ----------------------------
 -- Table structure for `c_role`
@@ -89,32 +85,31 @@ CREATE TABLE `c_role` (
 -- ----------------------------
 -- Records of c_role
 -- ----------------------------
-INSERT INTO `c_role` VALUES ('1', 'admin', '超级管理员', 'admin', '1584071747', 'admin', '1584071747');
+INSERT INTO `c_role` VALUES ('1', 'admin', '超级管理员', 'admin', '1584071757', 'admin', '1584071757');
 
 -- ----------------------------
 -- Table structure for `c_role_menu`
 -- ----------------------------
 DROP TABLE IF EXISTS `c_role_menu`;
 CREATE TABLE `c_role_menu` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
   `role_id` bigint(20) DEFAULT NULL COMMENT '角色ID',
   `menu_id` bigint(20) DEFAULT NULL COMMENT '菜单ID',
   `create_by` varchar(50) DEFAULT NULL COMMENT '创建人',
   `create_time` bigint(20) DEFAULT NULL COMMENT '创建时间',
   `update_by` varchar(50) DEFAULT NULL COMMENT '更新人',
-  `update_time` bigint(20) DEFAULT NULL COMMENT '更新时间'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色与菜单对应关系';
+  `update_time` bigint(20) DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='角色与菜单对应关系';
 
 -- ----------------------------
 -- Records of c_role_menu
 -- ----------------------------
-INSERT INTO `c_role_menu` VALUES ('1', '1', 'admin', '1584705888', 'admin', '1584705888');
-INSERT INTO `c_role_menu` VALUES ('1', '2', 'admin', '1584705888', 'admin', '1584705888');
-INSERT INTO `c_role_menu` VALUES ('1', '6', 'admin', '1584705888', 'admin', '1584705888');
-INSERT INTO `c_role_menu` VALUES ('1', '8', 'admin', '1584705888', 'admin', '1584705888');
-INSERT INTO `c_role_menu` VALUES ('1', '9', 'admin', '1584705888', 'admin', '1584705888');
-INSERT INTO `c_role_menu` VALUES ('1', '3', 'admin', '1584705888', 'admin', '1584705888');
-INSERT INTO `c_role_menu` VALUES ('1', '4', 'admin', '1584705888', 'admin', '1584705888');
-INSERT INTO `c_role_menu` VALUES ('1', '5', 'admin', '1584705888', 'admin', '1584705888');
+INSERT INTO `c_role_menu` VALUES ('1', '1', '1', 'admin', '1584071757', 'admin', '1584071757');
+INSERT INTO `c_role_menu` VALUES ('2', '1', '2', 'admin', '1584071757', 'admin', '1584071757');
+INSERT INTO `c_role_menu` VALUES ('3', '1', '3', 'admin', '1584071757', 'admin', '1584071757');
+INSERT INTO `c_role_menu` VALUES ('4', '1', '4', 'admin', '1584071757', 'admin', '1584071757');
+INSERT INTO `c_role_menu` VALUES ('5', '1', '5', 'admin', '1584071757', 'admin', '1584071757');
 
 -- ----------------------------
 -- Table structure for `c_user`
@@ -131,8 +126,6 @@ CREATE TABLE `c_user` (
   `create_time` bigint(20) DEFAULT NULL COMMENT '创建时间',
   `update_by` varchar(50) DEFAULT NULL COMMENT '更新人',
   `update_time` bigint(20) DEFAULT NULL COMMENT '更新时间',
-  `last_login_ip` varchar(50) DEFAULT '' COMMENT '最后一次登录ip',
-  `last_login_time` bigint(50) DEFAULT '0' COMMENT '最后登录时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户';
@@ -140,7 +133,25 @@ CREATE TABLE `c_user` (
 -- ----------------------------
 -- Records of c_user
 -- ----------------------------
-INSERT INTO `c_user` VALUES ('1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '281431280@qq.com', '15137022093', '0', 'admin', '1583820317', 'admin', '1584698108', '192.168.31.1', '1584762335');
+INSERT INTO `c_user` VALUES ('1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '281431280@qq.com', '15137022093', '0', 'admin', '1583820317', 'admin', '1583820317');
+
+-- ----------------------------
+-- Table structure for `c_user_data`
+-- ----------------------------
+DROP TABLE IF EXISTS `c_user_data`;
+CREATE TABLE `c_user_data` (
+  `user_id` int(10) unsigned NOT NULL,
+  `coins` int(10) unsigned NOT NULL DEFAULT '0',
+  `registere_time` bigint(20) DEFAULT NULL,
+  `last_login_ip` varchar(255) DEFAULT NULL,
+  `email_status` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `mobile_status` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户数据';
+
+-- ----------------------------
+-- Records of c_user_data
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `c_user_oauth`
@@ -170,15 +181,17 @@ CREATE TABLE `c_user_oauth` (
 -- ----------------------------
 DROP TABLE IF EXISTS `c_user_role`;
 CREATE TABLE `c_user_role` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
   `user_id` bigint(20) DEFAULT NULL COMMENT '用户ID',
   `role_id` bigint(20) DEFAULT NULL COMMENT '角色ID',
   `create_by` varchar(50) DEFAULT NULL COMMENT '创建人',
   `create_time` bigint(20) DEFAULT NULL COMMENT '创建时间',
   `update_by` varchar(50) DEFAULT NULL COMMENT '更新人',
-  `update_time` bigint(20) DEFAULT NULL COMMENT '更新时间'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户与角色对应关系';
+  `update_time` bigint(20) DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户与角色对应关系';
 
 -- ----------------------------
 -- Records of c_user_role
 -- ----------------------------
-INSERT INTO `c_user_role` VALUES ('1', '1', 'admin', '1584698108', 'admin', '1584698108');
+INSERT INTO `c_user_role` VALUES ('1', '1', '1', 'admin', '1584071757', 'admin', '1584071757');

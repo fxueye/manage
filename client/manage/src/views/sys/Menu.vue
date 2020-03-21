@@ -9,7 +9,7 @@
     </div>
     <div class="container">
       <div class="handle-box">
-        <el-button type="primary" class="mr10" @click="handleAdd">添加菜单</el-button>
+        <perms-button type="primary" perms="sys:menu:add" class="mr10" @click="handleAdd">添加菜单</perms-button>
 
         <!-- <el-input v-model="query.name" placeholder="名称" class="handle-input mr10"></el-input>
         <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>-->
@@ -66,17 +66,18 @@
         ></el-table-column>
         <el-table-column label="操作" width="180" fixed="right" align="center">
           <template slot-scope="scope">
-            <el-button
+            <perms-button
               type="text"
               icon="el-icon-edit"
+              perms="sys:menu:edit"
               @click="handleEdit(scope.$index, scope.row)"
-            >编辑</el-button>
-            <el-button
+            >编辑</perms-button>
+            <perms-button
               type="text"
               icon="el-icon-delete"
-              class="red"
+              perms="sys:menu:del"
               @click="handleDelete(scope.$index, scope.row)"
-            >删除</el-button>
+            >删除</perms-button>
           </template>
         </el-table-column>
       </el-table>
@@ -142,10 +143,12 @@
 import { mapGetters } from "vuex";
 import utils from "@/utils/utils";
 import PopupTreeInput from "@/components/PopupTreeInput";
+import PermsButton from "@/components/PermsButton";
 export default {
   // name: "",
   components: {
-    PopupTreeInput: PopupTreeInput
+    PopupTreeInput: PopupTreeInput,
+    PermsButton: PermsButton
   },
   data() {
     return {

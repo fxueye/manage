@@ -21,6 +21,7 @@ class Auth extends MY_Controller
                 $payload = array();
                 $payload['id'] = $user['id'];
                 $payload['timestamp'] = time();
+                $payload['name'] = $user['name'];
 
                 $this->user->update($user['id'], array(
                     "last_login_ip" => $this->ip,
