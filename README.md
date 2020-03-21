@@ -12,17 +12,17 @@
 
 ### 登录
 
-![Image text](screenshots/login.png)
+![Image text](http://home.zhaobaoge.com:8003/image/login.png)
 
 ### 首页
 
-![Image text](screenshots/index.png)
+![Image text](http://home.zhaobaoge.com:8003/image/index.png)
 
 ## 赞赏
 
 请作者喝杯咖啡吧！(微信号：S281431280)
 
-![微信扫一扫](screenshots/weixin.png)
+![微信扫一扫](http://home.zhaobaoge.com:8003/image/weixin.png)
 
 ## 特别鸣谢
 
