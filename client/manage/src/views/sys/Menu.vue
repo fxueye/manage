@@ -257,6 +257,7 @@ export default {
         if (valid) {
           let data = { ...this.dataForm };
           delete data["parent_name"];
+          delete data["children"];
           this.$store
             .dispatch("menu/save", data)
             .then(res => {
