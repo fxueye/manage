@@ -74,7 +74,7 @@ class MY_Controller extends CI_Controller
 			);
 		}
 
-		$output = $this->json_xencode($ret);
+		$output = json_encode($ret);
 
 		log_message("INFO", "output:" . $output);
 		print $output;
@@ -129,26 +129,7 @@ class MY_Controller extends CI_Controller
 		return JWT::encode($data, $this->config->item('jwt_key'), $this->config->item('jwt_algorithm'));
 	}
 
-	public function json_xencode($value, $options = 0, $unescapee_unicode = true)
-	{
-		$v = json_encode($value, $options);
-		if ($unescapee_unicode) {
-			$v = $this->unicode_encode($v);
-			$v = preg_replace('/\\\\\//', '/', $v);
-		}
-		return $v;
-	}
-
-	public function unicode_encode($str)
-	{
-		return preg_replace_callback("/\\\\u([0-9a-zA-Z]{4})/", array($this, "encode_callback"), $str);
-	}
-
-	public function encode_callback($matches)
-	{
-		return mb_convert_encoding(pack("H*", $matches[1]), "UTF-8", "UTF-16");
-	}
-
+	
 	function set_cache($key, $data, $expire)
 	{
 		return $this->cache->save($key, $data, $expire);
